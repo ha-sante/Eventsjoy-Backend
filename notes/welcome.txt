@@ -1,0 +1,7 @@
+For the interactions of the frontend and backend
+We will use GraphQL to glue them together
+
+
+The frontend gets data through API calls via GraphQL
+The backend allows these interactions via it and the Data Storage ( Fauna Database )
+

@@ -1,11 +1,82 @@
+type EventOrganizer{
+	name: String!
+	image: String!
+}
+
+type EventType{
+	name: String!
+}
+
+type EventCategory{
+	name: String!
+}
+
+type EventTag{
+	name: String!
+}
+
+type EventLocation{
+	venue: String
+	online: String
+	toBeAnnounced: Boolean
+}
+
+
 
 type Event {
   id:  Int!
-  title: String!
+  event_title: String!
+  event_description: String!
+  event_organizer: EventOrganizer!
+  event_type: EventType
+  event_category: EventCategory
+  event_tags: [EventTag]
+  event_location: EventLocation
 }
 
 type Query {
-  events: [Event]!
+  get_event: [Event]
 }
+
+
+
+
+
+input AddEventOrganizer{
+	name: String!
+	image: String!
+}
+
+input AddEventType{
+	name: String!
+}
+
+input AddEventCategory{
+	name: String!
+}
+
+input AddEventTag{
+	name: String!
+}
+
+input AddEventLocation{
+	venue: String
+	online: String
+	toBeAnnounced: Boolean
+}
+
+
+type Mutation{
+  create_event(  
+	  event_title: String,
+	  event_description: String,
+	  event_organizer: AddEventOrganizer!,
+	  event_type: AddEventType!,
+	  event_category: AddEventCategory!,
+	  event_tags: [AddEventTag]!,
+	  event_location: AddEventLocation
+  ): Event
+}
+
 
 

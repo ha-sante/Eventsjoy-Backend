@@ -31,6 +31,8 @@
     "faunadb": "^4.0.0",
     "graphql": "^15.4.0",
     "graphql-tools": "^7.0.2",
+    "nestjs-faunadb": "^1.0.2",
+    "nodemon": "^2.0.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pm2": "^4.5.1",

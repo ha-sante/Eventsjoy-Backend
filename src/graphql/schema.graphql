@@ -1,82 +1,146 @@
-type EventOrganizer{
+# SUB TYPES -------------------------------------------------------------------------
+
+type EventLocationAddress {
+	label: String
+	countryCode: String
+	countryName: String
+	stateCode: String
+	state: String
+	county: String
+	city: String
+	district: String
+	postalCode: String
+}
+
+type EventLocationAddressPosition {
+	lat: Int
+	lng: Int
+}
+
+type EventLocationAddressMapCords {
+	west: Int
+	south: Int
+	east: Int
+	north: Int
+}
+
+# SUB PARENT
+type EventLocationVenue {
+	title: String
+	id: String
+	address: EventLocationAddress
+	position: EventLocationAddressPosition
+	mapView: EventLocationAddressMapCords
+}
+
+
+type EventDate{
+	start: String
+	end: String
+}
+
+type EventTiming{
+	start: String
+	end: String
+}
+
+type EventTimezoning{
+	zone: String
+	label: String
+}
+
+
+# PARENT TYPES -------------------------------------------------------------------------
+
+type EventOrganizer {
 	name: String!
 	image: String!
 }
 
-type EventType{
+type EventType {
 	name: String!
 }
 
-type EventCategory{
+type EventCategory {
 	name: String!
 }
 
-type EventTag{
+type EventTag {
 	name: String!
 }
 
-type EventLocation{
-	venue: String
+type EventLocation {
+	venue: EventLocationVenue
 	online: String
 	toBeAnnounced: Boolean
+}	
+
+type EventDateAndTiming{
+	date: EventDate
+	time: EventTiming
+	timezone: EventTimezoning
 }
 
 
 
+
+
+# COMPLETE TYPES -------------------------------------------------------------------------
 type Event {
-  id:  Int!
-  event_title: String!
-  event_description: String!
-  event_organizer: EventOrganizer!
-  event_type: EventType
-  event_category: EventCategory
-  event_tags: [EventTag]
-  event_location: EventLocation
+	id: Int!
+	event_title: String!
+	event_description: String!
+	event_organizer: EventOrganizer!
+	event_type: EventType
+	event_category: EventCategory
+	event_tags: [EventTag]
+	event_location: EventLocation
+	event_schedule: EventDateAndTiming
 }
+
+
+
+# QUERIES -------------------------------------------------------------------------
 
 type Query {
-  get_event: [Event]
+	get_event: [Event]
 }
 
 
 
+# MUTATIONS -------------------------------------------------------------------------
 
-
-input AddEventOrganizer{
+input AddEventOrganizer {
 	name: String!
 	image: String!
 }
 
-input AddEventType{
+input AddEventType {
 	name: String!
 }
 
-input AddEventCategory{
+input AddEventCategory {
 	name: String!
 }
 
-input AddEventTag{
+input AddEventTag {
 	name: String!
 }
 
-input AddEventLocation{
+input AddEventLocation {
 	venue: String
 	online: String
 	toBeAnnounced: Boolean
 }
 
-
-type Mutation{
-  create_event(  
-	  event_title: String,
-	  event_description: String,
-	  event_organizer: AddEventOrganizer!,
-	  event_type: AddEventType!,
-	  event_category: AddEventCategory!,
-	  event_tags: [AddEventTag]!,
-	  event_location: AddEventLocation
-  ): Event
+type Mutation {
+	create_event(
+		event_title: String
+		event_description: String
+		event_organizer: AddEventOrganizer!
+		event_type: AddEventType!
+		event_category: AddEventCategory!
+		event_tags: [AddEventTag]!
+		event_location: AddEventLocation
+	): Event
 }
-
-
-

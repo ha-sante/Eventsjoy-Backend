@@ -88,9 +88,10 @@ type EventDateAndTiming{
 # COMPLETE TYPES -------------------------------------------------------------------------
 type Event {
 	id: Int!
+	event_state: String!
 	event_title: String!
 	event_description: String!
-	event_organizer: EventOrganizer!
+	event_organizer: EventOrganizer
 	event_type: EventType
 	event_category: EventCategory
 	event_tags: [EventTag]
@@ -110,6 +111,7 @@ type Query {
 
 # MUTATIONS -------------------------------------------------------------------------
 
+
 input AddEventOrganizer {
 	name: String!
 	image: String!
@@ -128,19 +130,29 @@ input AddEventTag {
 }
 
 input AddEventLocation {
-	venue: String
+	venue: EventLocationVenue
 	online: String
 	toBeAnnounced: Boolean
+}	
+
+input AddEventDateAndTiming{
+	date: EventDate
+	time: EventTiming
+	timezone: EventTimezoning
+}
+
+input AddEvent{
+	event_state: String!
+	event_title: String!
+	event_description: String!
+	event_organizer: AddEventOrganizer
+	event_type: AddEventType
+	event_category: AddEventCategory
+	event_tags: [AddEventTag]
+	event_location: AddEventLocation
+	event_schedule: AddEventDateAndTiming
 }
 
 type Mutation {
-	create_event(
-		event_title: String
-		event_description: String
-		event_organizer: AddEventOrganizer!
-		event_type: AddEventType!
-		event_category: AddEventCategory!
-		event_tags: [AddEventTag]!
-		event_location: AddEventLocation
-	): Event
+	create_event(AddEvent): Event
 }

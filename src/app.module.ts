@@ -11,10 +11,15 @@ const FaunaConfig: FaunadbModuleOptions = {
 @Module({
   imports: [
       GraphQLModule.forRoot({
-      	 typePaths: ['./**/graphql/*.graphql'],
-      	 resolverValidationOptions: {
-      	 	requireResolversForResolveType: false,
-      	 }
+      	 // typePaths: ['./**/graphql/*.graphql'],
+      	 // resolverValidationOptions: {
+      	 // 	requireResolversForResolveType: false,
+      	 // },
+         autoSchemaFile: true,
+         cors: {
+            origin: 'http://localhost:3000',
+            credentials: true,
+          }
       }),
       EventsModule,
       FaunadbModule.forRoot(FaunaConfig)

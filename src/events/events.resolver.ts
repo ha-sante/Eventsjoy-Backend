@@ -1,52 +1,49 @@
 import { Logger, Injectable } from '@nestjs/common';
-import { Query, Mutation, Resolver, Args } from '@nestjs/graphql';
+import { Query, Mutation, Resolver, Args, Parent } from '@nestjs/graphql';
 
 import { FaunadbService, query as q, Client, values } from 'nestjs-faunadb';
 import { CollectionLabels } from '../integrations/database';
 
+import {
+	EventInput,
+	EventOrganizerInput,
+	EventTypeInput,
+	EventCategoryInput,
+	EventTagInput,
+	EventLocationInput,
+	EventDateAndTimingInput,
+} from './models/inputs.model';
+
+
+
+import {
+	Event
+} from './models/types.model';
+
+
 @Resolver()
 export class EventsResolver {
 	private readonly logger = new Logger(EventsResolver.name);
-
 	client: Client; // fauna db client
 
 	constructor(private readonly faunadbService: FaunadbService) {
 		this.client = faunadbService.getClient();
 	}
 
-	demoEvent = [
-		{
-			id: 0,
-			event_title: 'Hello World',
-		},
-	];
-
-	@Query('get_event')
-	get_event() {
-		return this.demoEvent;
+	@Query(() => String)
+	sayHello(): string {
+		return 'Hello World!';
 	}
 
-	@Mutation('create_event')
+	@Mutation((returns) => Event)
 	async create_event(
-		@Args('event_title') event_title: string,
-		@Args('event_description') event_description: string,
-		@Args('event_organizer') event_organizer: string,
-		@Args('event_type') event_type: string,
-		@Args('event_category') event_category: string,
-		@Args('event_tags') event_tags: string,
-		@Args('event_location') event_location: string,
-	){
+		@Args('data') event_data: EventInput,
+	) {
 		try {
 			const collection = q.Collection(CollectionLabels.eventsData);
-			const data = { 
-				event_title, 
-				event_description, 
-				event_organizer, 
-				event_type,
-				event_category,
-				event_tags,
-				event_location
-			};
+			const data = {...event_data};
+
+			this.logger.log(data)
 
 			const query = q.Create(collection, { data });
 
@@ -56,7 +53,7 @@ export class EventsResolver {
 			this.logger.log(result.data);
 
 			return result.data;
-		} catch(error){
+		} catch (error) {
 			return error;
 		}
 	}

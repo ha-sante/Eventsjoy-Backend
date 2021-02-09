@@ -33,25 +33,25 @@ export class EventLocationAddress {
 
 @ObjectType()
 export class EventLocationAddressPosition {
-	@Field((type) => Int)
+	@Field()
 	lat: number;
 
-	@Field((type) => Int)
+	@Field()
 	lng: number;
 }
 
 @ObjectType()
 export class EventLocationAddressMapCords {
-	@Field((type) => Int)
+	@Field()
 	west: number;
 
-	@Field((type) => Int)
+	@Field()
 	south: number;
 
-	@Field((type) => Int)
+	@Field()
 	east: number;
 
-	@Field((type) => Int)
+	@Field()
 	north: number;
 }
 
@@ -158,8 +158,8 @@ export class EventDateAndTiming {
 
 @ObjectType()
 export class Event {
-	@Field((type) => Int)
-	id: number;
+	@Field({ nullable: true })
+	id: string;
 
 	@Field({ nullable: true })
 	event_state?: string;
@@ -179,8 +179,8 @@ export class Event {
 	@Field({ nullable: true })
 	event_category?: EventCategory;
 
-	@Field((type) => [EventTag], { nullable: true })
-	event_tags?: EventTag[];
+	@Field((type) => [String], { nullable: true })
+	event_tags?: string[];
 
 	@Field({ nullable: true })
 	event_location?: EventLocation;

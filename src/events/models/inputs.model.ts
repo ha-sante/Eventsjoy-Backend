@@ -6,55 +6,55 @@ import { InputType, Field, Int, ObjectType } from '@nestjs/graphql';
 
 @InputType()
 export class EventLocationAddressInput {
-	@Field()
+	@Field({ nullable: true })
 	label: string;
 
-	@Field()
+	@Field({ nullable: true })
 	countryCode: string;
 
-	@Field()
+	@Field({ nullable: true })
 	countryName: string;
 
-	@Field()
+	@Field({ nullable: true })
 	stateCode: string;
 
-	@Field()
+	@Field({ nullable: true })
 	state: string;
 
-	@Field()
+	@Field({ nullable: true })
 	county: string;
 
-	@Field()
+	@Field({ nullable: true })
 	city: string;
 
-	@Field()
+	@Field({ nullable: true })
 	district: string;
 
-	@Field()
+	@Field({ nullable: true })
 	postalCode: string;
 }
 
 @InputType()
 export class EventLocationAddressPositionInput {
-	@Field((type) => Int)
+	@Field()
 	lat: number;
 
-	@Field((type) => Int)
+	@Field()
 	lng: number;
 }
 
 @InputType()
 export class EventLocationAddressMapCordsInput {
-	@Field((type) => Int)
+	@Field({ nullable: true })
 	west: number;
 
-	@Field((type) => Int)
+	@Field({ nullable: true })
 	south: number;
 
-	@Field((type) => Int)
+	@Field({ nullable: true })
 	east: number;
 
-	@Field((type) => Int)
+	@Field({ nullable: true })
 	north: number;
 }
 
@@ -62,19 +62,25 @@ export class EventLocationAddressMapCordsInput {
 
 @InputType()
 export class EventLocationVenueInput {
-	@Field()
+	@Field({ nullable: true })
 	title: string;
 
-	@Field()
+	@Field({ nullable: true })
 	id: string;
 
-	@Field()
+	@Field({ nullable: true })
+	resultType: string;	
+
+	@Field({ nullable: true })
+	localityType: string;
+
+	@Field({ nullable: true })
 	address: EventLocationAddressInput;
 
-	@Field()
+	@Field({ nullable: true })
 	position: EventLocationAddressPositionInput;
 
-	@Field()
+	@Field({ nullable: true })
 	mapView: EventLocationAddressMapCordsInput;
 }
 
@@ -82,28 +88,28 @@ export class EventLocationVenueInput {
 
 @InputType()
 export class EventDateInput {
-	@Field()
+	@Field({ nullable: true })
 	start: string;
 
-	@Field()
+	@Field({ nullable: true })
 	end: string;
 }
 
 @InputType()
 export class EventTimingInput {
-	@Field()
+	@Field({ nullable: true })
 	start: string;
 
-	@Field()
+	@Field({ nullable: true })
 	end: string;
 }
 
 @InputType()
 export class EventTimezoningInput {
-	@Field()
+	@Field({ nullable: true })
 	zone: string;
 
-	@Field()
+	@Field({ nullable: true })
 	label: string;
 }
 
@@ -116,64 +122,64 @@ export class EventOrganizerInput {
 	@Field()
 	name: string;
 
-	@Field()
+	@Field({ nullable: true })
 	image: string;
 }
 
 @InputType()
 export class EventTypeInput {
-	@Field()
+	@Field({ nullable: true })
 	name: string;
 }
 
 @InputType()
 export class EventCategoryInput {
-	@Field()
+	@Field({ nullable: true })
 	name: string;
 }
 
 @InputType()
 export class EventTagInput {
-	@Field()
+	@Field({ nullable: true })
 	name: string;
 }
 
 @InputType()
 export class EventLocationInput {
-	@Field()
+	@Field({ nullable: true })
 	venue: EventLocationVenueInput;
 
-	@Field()
+	@Field({ nullable: true })
 	online: string;
 
-	@Field()
+	@Field({ nullable: true })
 	toBeAnnounced: boolean;
 }
 
 @InputType()
 export class EventDateAndTimingInput {
-	@Field()
+	@Field({ nullable: true })
 	date: EventDateInput;
 
-	@Field()
+	@Field({ nullable: true })
 	time: EventTimingInput;
 
-	@Field()
+	@Field({ nullable: true })
 	timezone: EventTimezoningInput;
 }
 
 @InputType()
 export class EventInput {
-	@Field()
+	@Field({ nullable: true })
 	event_state: string;
 
-	@Field()
+	@Field({ nullable: true })
 	event_title: string;
 
-	@Field()
+	@Field({ nullable: true })
 	event_description: string;
 
-	@Field()
+	@Field({ nullable: true })
 	event_organizer: EventOrganizerInput;
 
 	@Field({ nullable: true })
@@ -182,8 +188,8 @@ export class EventInput {
 	@Field({ nullable: true })
 	event_category: EventCategoryInput;
 
-	@Field((type) => [EventTagInput], { nullable: true })
-	event_tags: EventTagInput[];
+	@Field((type) => [String], { nullable: true })
+	event_tags: string[];
 
 	@Field({ nullable: true })
 	event_location: EventLocationInput;

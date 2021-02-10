@@ -52,4 +52,27 @@ export class EventsResolver {
 			return error;
 		}
 	}
+
+
+	@Mutation((returns) => Event)
+	async update_event(@Args('data') event_data: EventInput) {
+		try {
+			const collection = q.Collection(CollectionLabels.eventsData);
+			const data = { ...event_data };
+
+			// run the query
+			const query = q.Create(collection, { data });
+			const result: any = await this.client.query(query);
+
+			// add the id to the data object
+			let response = result.data;
+			response.id = result.ref.id;
+
+			return response;
+		} catch (error) {
+			return error;
+		}
+	}
+
+
 }

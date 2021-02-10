@@ -154,6 +154,21 @@ export class EventDateAndTiming {
 	timezone: EventTimezoning;
 }
 
+@ObjectType()
+export class EventImage {
+	@Field()
+	url: string;
+}
+
+@ObjectType()
+export class EventDescription {
+	@Field({ nullable: true })
+	summary: string;
+
+	@Field({ nullable: true })
+	content: string;
+}
+
 // COMPLETE TYPES -------------------------------------------------------------------------
 
 @ObjectType()
@@ -168,7 +183,7 @@ export class Event {
 	event_title?: string;
 
 	@Field({ nullable: true })
-	event_description?: string;
+	event_description?: EventDescription;
 
 	@Field({ nullable: true })
 	event_organizer?: EventOrganizer;
@@ -187,6 +202,10 @@ export class Event {
 
 	@Field({ nullable: true })
 	event_schedule?: EventDateAndTiming;
+
+	@Field({ nullable: true })
+	event_image?: EventImage;
+
 }
 
 

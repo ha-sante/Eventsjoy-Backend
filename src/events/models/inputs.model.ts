@@ -169,6 +169,23 @@ export class EventDateAndTimingInput {
 }
 
 @InputType()
+export class EventImageInput {
+	@Field()
+	url: string;
+}
+
+@InputType()
+export class EventDescriptionInput {
+	@Field({ nullable: true })
+	summary: string;
+
+	@Field({ nullable: true })
+	content: string;
+}
+
+
+
+@InputType()
 export class EventInput {
 	@Field({ nullable: true })
 	event_state: string;
@@ -177,7 +194,7 @@ export class EventInput {
 	event_title: string;
 
 	@Field({ nullable: true })
-	event_description: string;
+	event_description: EventDescriptionInput;
 
 	@Field({ nullable: true })
 	event_organizer: EventOrganizerInput;
@@ -196,4 +213,7 @@ export class EventInput {
 
 	@Field({ nullable: true })
 	event_schedule: EventDateAndTimingInput;
+
+	@Field({ nullable: true })
+	event_image?: EventImageInput;
 }

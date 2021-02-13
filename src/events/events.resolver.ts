@@ -47,6 +47,8 @@ export class EventsResolver {
 			let response = result.data;
 			response.id = result.ref.id;
 
+			this.logger.log(response.id, "Created Event with ID:");
+
 			return response;
 		} catch (error) {
 			return error;
@@ -55,18 +57,15 @@ export class EventsResolver {
 
 
 	@Mutation((returns) => Event)
-	async update_event(@Args('data') event_data: EventInput) {
+	async update_event(@Args('id') event_id: string, @Args('data') event_data: EventInput) {
 		try {
 			const collection = q.Collection(CollectionLabels.eventsData);
 			const data = { ...event_data };
 
 			// run the query
-			const query = q.Create(collection, { data });
+			const query = q.Update(q.Ref(collection, event_id), { data });
 			const result: any = await this.client.query(query);
-
-			// add the id to the data object
-			let response = result.data;
-			response.id = result.ref.id;
+			const response = result.data;
 
 			return response;
 		} catch (error) {

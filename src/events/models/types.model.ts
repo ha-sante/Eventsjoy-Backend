@@ -177,34 +177,34 @@ export class Event {
 	id: string;
 
 	@Field({ nullable: true })
-	event_state?: string;
+	event_state: string;
 
 	@Field({ nullable: true })
-	event_title?: string;
+	event_title: string;
 
 	@Field({ nullable: true })
-	event_description?: EventDescription;
+	event_description: EventDescription;
 
 	@Field({ nullable: true })
-	event_organizer?: EventOrganizer;
+	event_organizer: EventOrganizer;
 
 	@Field({ nullable: true })
-	event_type?: EventType;
+	event_type: EventType;
 
 	@Field({ nullable: true })
-	event_category?: EventCategory;
+	event_category: EventCategory;
 
 	@Field((type) => [String], { nullable: true })
-	event_tags?: string[];
+	event_tags: string[];
 
 	@Field({ nullable: true })
-	event_location?: EventLocation;
+	event_location: EventLocation;
 
 	@Field({ nullable: true })
-	event_schedule?: EventDateAndTiming;
+	event_schedule: EventDateAndTiming;
 
 	@Field({ nullable: true })
-	event_image?: EventImage;
+	event_image: EventImage;
 
 }
 

@@ -21,6 +21,7 @@ export const CollectionLabels = {
 
 export const CollectionSearchIndexes = {
     find_event_by_id: "find_event_by_id",
+    events_by_owner_id: "events_by_owner_id",
 }
 
 

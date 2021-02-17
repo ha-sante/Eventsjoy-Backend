@@ -2,7 +2,10 @@ import { Logger, Injectable } from '@nestjs/common';
 import { Query, Mutation, Resolver, Args, Parent } from '@nestjs/graphql';
 
 import { FaunadbService, query as q, Client, values } from 'nestjs-faunadb';
-import { CollectionLabels } from '../integrations/database';
+import {
+	CollectionLabels,
+	CollectionSearchIndexes,
+} from '../integrations/database';
 
 import {
 	EventInput,
@@ -25,12 +28,38 @@ export class EventsResolver {
 		this.client = faunadbService.getClient();
 	}
 
-	@Query((returns) => Event)
-	async get_event() {
-		// take the event id
-		// query the database
-		// return the event
-		return 'Hello World!';
+	@Query((returns)=> [Event])
+	async get_events_by_owner_id(@Args('id') event_owner_id: string) {
+		try {
+			// query in  fauna for all documents with that
+			const queryIndexMatching = q.Match(
+				q.Index(CollectionSearchIndexes.events_by_owner_id),
+				event_owner_id,
+			);
+
+			// run the query
+			const query = q.Map(
+				q.Paginate(queryIndexMatching),
+				q.Lambda('ref', q.Get(q.Var('ref') )),
+			);
+
+			// for each document, get the data params
+			const readyQuery = q.Map(
+				query, 
+				q.Lambda("data_obj", q.Select("data", q.Var("data_obj")) )
+			);
+
+			// finalize the data extraction
+			const result: any = await this.client.query(readyQuery);
+			const response = result.data;
+
+			this.logger.log(event_owner_id, `Collected Events of ${response.length}`);
+
+			return response;
+		} catch (error) {
+			this.logger.log(error);
+			return error;
+		}
 	}
 
 	@Mutation((returns) => Event)
@@ -47,7 +76,7 @@ export class EventsResolver {
 			let response = result.data;
 			response.id = result.ref.id;
 
-			this.logger.log(response.id, "Created Event with ID:");
+			this.logger.log(response.id, 'Created Event');
 
 			return response;
 		} catch (error) {
@@ -55,9 +84,11 @@ export class EventsResolver {
 		}
 	}
 
-
 	@Mutation((returns) => Event)
-	async update_event(@Args('id') event_id: string, @Args('data') event_data: EventInput) {
+	async update_event(
+		@Args('id') event_id: string,
+		@Args('data') event_data: EventInput,
+	) {
 		try {
 			const collection = q.Collection(CollectionLabels.eventsData);
 			const data = { ...event_data };
@@ -67,11 +98,11 @@ export class EventsResolver {
 			const result: any = await this.client.query(query);
 			const response = result.data;
 
+			this.logger.log(event_id, 'Updated Event');
+
 			return response;
 		} catch (error) {
 			return error;
 		}
 	}
-
-
 }

@@ -173,8 +173,12 @@ export class EventDescription {
 
 @ObjectType()
 export class Event {
+	
 	@Field({ nullable: true })
 	id: string;
+
+	@Field({ nullable: true })
+	event_owner_id: string;
 
 	@Field({ nullable: true })
 	event_state: string;

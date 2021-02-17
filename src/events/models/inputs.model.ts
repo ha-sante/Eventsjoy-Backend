@@ -188,6 +188,9 @@ export class EventDescriptionInput {
 @InputType()
 export class EventInput {
 	@Field({ nullable: true })
+	event_owner_id: string;
+
+	@Field({ nullable: true })
 	event_state: string;
 
 	@Field({ nullable: true })

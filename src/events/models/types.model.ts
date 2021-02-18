@@ -3,101 +3,101 @@ import { InputType, Field, Int, ObjectType } from '@nestjs/graphql';
 // SUB TYPES -------------------------------------------------------------------------
 @ObjectType()
 export class EventLocationAddress {
-	@Field()
+	@Field({ nullable: true })
 	label: string;
 
-	@Field()
+	@Field({ nullable: true })
 	countryCode: string;
 
-	@Field()
+	@Field({ nullable: true })
 	countryName: string;
 
-	@Field()
+	@Field({ nullable: true })
 	stateCode: string;
 
-	@Field()
+	@Field({ nullable: true })
 	state: string;
 
-	@Field()
+	@Field({ nullable: true })
 	county: string;
 
-	@Field()
+	@Field({ nullable: true })
 	city: string;
 
-	@Field()
+	@Field({ nullable: true })
 	district: string;
 
-	@Field()
+	@Field({ nullable: true })
 	postalCode: string;
 }
 
 @ObjectType()
 export class EventLocationAddressPosition {
-	@Field()
+	@Field({ nullable: true })
 	lat: number;
 
-	@Field()
+	@Field({ nullable: true })
 	lng: number;
 }
 
 @ObjectType()
 export class EventLocationAddressMapCords {
-	@Field()
+	@Field({ nullable: true })
 	west: number;
 
-	@Field()
+	@Field({ nullable: true })
 	south: number;
 
-	@Field()
+	@Field({ nullable: true })
 	east: number;
 
-	@Field()
+	@Field({ nullable: true })
 	north: number;
 }
 
 // SUB PARENT
 @ObjectType()
 export class EventLocationVenue {
-	@Field()
+	@Field({ nullable: true })
 	title: string;
 
-	@Field()
+	@Field({ nullable: true })
 	id: string;
 
-	@Field()
+	@Field({ nullable: true })
 	address: EventLocationAddress;
 
-	@Field()
+	@Field({ nullable: true })
 	position: EventLocationAddressPosition;
 
-	@Field()
+	@Field({ nullable: true })
 	mapView: EventLocationAddressMapCords;
 }
 
 @ObjectType()
 export class EventDate {
-	@Field()
+	@Field({ nullable: true })
 	start: string;
 
-	@Field()
+	@Field({ nullable: true })
 	end: string;
 }
 
 @ObjectType()
 export class EventTiming {
-	@Field()
+	@Field({ nullable: true })
 	start: string;
 
-	@Field()
+	@Field({ nullable: true })
 	end: string;
 }
 
 @ObjectType()
 export class EventTimezoning {
-	@Field()
+	@Field({ nullable: true })
 	zone: string;
 
-	@Field()
+	@Field({ nullable: true })
 	label: string;
 }
 
@@ -105,58 +105,58 @@ export class EventTimezoning {
 
 @ObjectType()
 export class EventOrganizer {
-	@Field()
+	@Field({ nullable: true })
 	name: string;
 
-	@Field()
+	@Field({ nullable: true })
 	image: string;
 }
 
 @ObjectType()
 export class EventType {
-	@Field()
+	@Field({ nullable: true })
 	name: string;
 }
 
 @ObjectType()
 export class EventCategory {
-	@Field()
+	@Field({ nullable: true })
 	name: string;
 }
 
 @ObjectType()
 export class EventTag {
-	@Field()
+	@Field({ nullable: true })
 	name: string;
 }
 
 @ObjectType()
 export class EventLocation {
-	@Field()
+	@Field({ nullable: true })
 	venue: EventLocationVenue;
 
-	@Field()
+	@Field({ nullable: true })
 	online: string;
 
-	@Field()
+	@Field({ nullable: true })
 	toBeAnnounced: boolean;
 }
 
 @ObjectType()
 export class EventDateAndTiming {
-	@Field()
+	@Field({ nullable: true })
 	date: EventDate;
 
-	@Field()
+	@Field({ nullable: true })
 	time: EventTiming;
 
-	@Field()
+	@Field({ nullable: true })
 	timezone: EventTimezoning;
 }
 
 @ObjectType()
 export class EventImage {
-	@Field()
+	@Field({ nullable: true })
 	url: string;
 }
 

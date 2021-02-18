@@ -170,7 +170,7 @@ export class EventDateAndTimingInput {
 
 @InputType()
 export class EventImageInput {
-	@Field()
+	@Field({ nullable: true })
 	url: string;
 }
 

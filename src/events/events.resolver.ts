@@ -28,7 +28,7 @@ export class EventsResolver {
 		this.client = faunadbService.getClient();
 	}
 
-	@Query((returns)=> [Event])
+	@Query((returns) => [Event])
 	async get_events_by_owner_id(@Args('id') event_owner_id: string) {
 		try {
 			// query in  fauna for all documents with that
@@ -40,13 +40,13 @@ export class EventsResolver {
 			// run the query
 			const query = q.Map(
 				q.Paginate(queryIndexMatching),
-				q.Lambda('ref', q.Get(q.Var('ref') )),
+				q.Lambda('ref', q.Get(q.Var('ref'))),
 			);
 
 			// for each document, get the data params
 			const readyQuery = q.Map(
-				query, 
-				q.Lambda("data_obj", q.Select("data", q.Var("data_obj")) )
+				query,
+				q.Lambda('data_obj', q.Select('data', q.Var('data_obj'))),
 			);
 
 			// finalize the data extraction
@@ -54,6 +54,25 @@ export class EventsResolver {
 			const response = result.data;
 
 			this.logger.log(event_owner_id, `Collected Events of ${response.length}`);
+
+			return response;
+		} catch (error) {
+			this.logger.log(error);
+			return error;
+		}
+	}
+
+	@Query((returns) => Event)
+	async get_event(@Args('id') event_id: string) {
+		try {
+			// query fauna for the document
+			const query = q.Get(
+				q.Ref(q.Collection(CollectionLabels.eventsData), event_id),
+			);
+			const result: any = await this.client.query(query);
+			const response = result.data;
+
+			this.logger.log(event_id, `Collected Event`);
 
 			return response;
 		} catch (error) {

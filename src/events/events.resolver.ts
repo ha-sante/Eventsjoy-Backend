@@ -124,10 +124,7 @@ export class EventsResolver {
 	}
 
 	@Mutation((returns) => Event)
-	async update_event(
-		@Args('id') event_id: string,
-		@Args('data') event_data: EventInput,
-	) {
+	async update_event( @Args('id') event_id: string, @Args('data') event_data: EventInput ) {
 		try {
 			const collection = q.Collection(CollectionLabels.eventsData);
 			const data = { ...event_data };
@@ -141,6 +138,25 @@ export class EventsResolver {
 
 			return response;
 		} catch (error) {
+			return error;
+		}
+	}
+
+	@Mutation((returns) => Event)
+	async delete_event(@Args('id') event_id: string) {
+		try {
+			// query fauna for the document
+			const query = q.Delete(
+				q.Ref(q.Collection(CollectionLabels.eventsData), event_id),
+			);
+			const result: any = await this.client.query(query);
+			const response = result.data;
+
+			this.logger.log(event_id, `Deleted Event`);
+
+			return response;
+		} catch (error) {
+			this.logger.log(error);
 			return error;
 		}
 	}

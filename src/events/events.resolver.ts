@@ -46,16 +46,36 @@ export class EventsResolver {
 			// for each document, get the data params
 			const readyQuery = q.Map(
 				query,
-				q.Lambda('data_obj', q.Select('data', q.Var('data_obj'))),
+				q.Lambda('data_obj',  q.Select(['ref', "id"], q.Var('data_obj')) ),
 			);
 
-			// finalize the data extraction
-			const result: any = await this.client.query(readyQuery);
-			const response = result.data;
+			// first query gets the element refrences
+			const resultOne: any = await this.client.query(readyQuery);
+			const responseOne = resultOne.data;
 
-			this.logger.log(event_owner_id, `Collected Events of ${response.length}`);
+			// second goes over it and gets the elements by refrence
+			// and gets the data section
+			const readyQueryTwo = q.Map(
+				query,
+				q.Lambda('data_obj',  q.Select('data', q.Var('data_obj')) ),
+			);
 
-			return response;
+			// we then have two arrays we refs and bodies
+			// we go over datas and append the refs as id 
+			const resultTwo: any = await this.client.query(readyQueryTwo);
+			const responseTwo = resultTwo.data;
+
+
+			const finalResponse = []
+			responseTwo.map( (singleEventData, index) =>{
+				let readyObj = {...singleEventData};
+				readyObj.id = responseOne[index];
+				finalResponse.push(readyObj) 
+			})
+
+			this.logger.log(event_owner_id, `Collected Events of ${finalResponse.length}`);
+
+			return finalResponse;
 		} catch (error) {
 			this.logger.log(error);
 			return error;

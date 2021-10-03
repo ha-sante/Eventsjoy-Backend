@@ -5,7 +5,7 @@ import { FaunadbModule, FaunadbModuleOptions } from 'nestjs-faunadb';
 
 
 const FaunaConfig: FaunadbModuleOptions = {
-  secret: ''
+  secret: 'INSERT YOUR FAUNA DATABASE/SERVER KEY HERE'
 }
 
 @Module({

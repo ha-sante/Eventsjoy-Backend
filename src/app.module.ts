@@ -5,7 +5,7 @@ import { FaunadbModule, FaunadbModuleOptions } from 'nestjs-faunadb';
 
 
 const FaunaConfig: FaunadbModuleOptions = {
-  secret: 'fnAEAgzlL_ACDFOIr7b9NUfLSCgiZhL-0_IrPvYK'
+  secret: ''
 }
 
 @Module({
